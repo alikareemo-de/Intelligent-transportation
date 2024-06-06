@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "BIA601-HW/1.0.0": {
+        "runtime": {
+          "BIA601-HW.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BIA601-HW/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

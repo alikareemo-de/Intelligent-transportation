@@ -1,0 +1,34 @@
+﻿@using BIA601_HW.ViewModel;
+@model TransportInputViewModel
+
+@{
+    ViewData["Title"] = "Result";
+}
+
+<h1>Result</h1>
+
+<h3>Distributed Cargos and Optimal Routes</h3>
+
+@foreach (var truck in Model.Trucks)
+{
+    <h4>@truck.TruckName</h4>
+    <p>Cargos:</p>
+    <ul>
+        @if (truck.Cargos != null && truck.Cargos.Count > 0)
+        {
+            @foreach (var cargo in truck.Cargos)
+            {
+                <li>@cargo.CargoName - Weight: @cargo.CargoWeight, Value: @cargo.CargoValue</li>
+            }
+        }
+        else
+        {
+            <li>No cargos assigned</li>
+        }
+    </ul>
+    <p>Route: @(truck.Route != null && truck.Route.Count > 0 ? string.Join(" -> ", truck.Route) : "No route available")</p>
+}
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to Input</a>
+</div>

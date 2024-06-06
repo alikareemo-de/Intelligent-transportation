@@ -1,0 +1,121 @@
+﻿@using BIA601_HW.ViewModel;
+@model TransportInputViewModel
+
+@{
+    ViewData["Title"] = "Transport Optimization";
+}
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <h1>VEHICLE</h1>
+            <ul class="navs">
+                <li><a asp-area="" asp-controller="Home" asp-action="Index"> Home</a></li>
+                <li><a href="">About us</a></li>
+                <li> <a asp-area="" asp-controller="Transport" asp-action="Index">Transport Controller</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<h1>Transport Optimization</h1>
+
+
+<form asp-action="Index" method="post">
+    <div class="form-group">
+        <label asp-for="NumberOfCargos" class="control-label">Number of Cargos</label>
+        <input asp-for="NumberOfCargos" class="form-control" id="NumberOfCargos" type="number" min="0" />
+    </div>
+    <div id="cargoInputs">
+        <!-- حقول البضائع ستظهر هنا -->
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumberOfAddresses" class="control-label">Number of Addresses</label>
+        <input asp-for="NumberOfAddresses" class="form-control" id="NumberOfAddresses" type="number" min="0" />
+    </div>
+    <div id="addressInputs">
+        <!-- حقول العناوين ستظهر هنا -->
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumberOfTrucks" class="control-label">Number of Trucks</label>
+        <input asp-for="NumberOfTrucks" class="form-control" id="NumberOfTrucks" type="number" min="0" />
+    </div>
+    <div id="truckInputs">
+        <!-- حقول الشاحنات ستظهر هنا -->
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById('NumberOfCargos').addEventListener('change', function () {
+            var cargoCount = parseInt(this.value);
+            var cargoInputs = document.getElementById('cargoInputs');
+            cargoInputs.innerHTML = '';
+            for (var i = 0; i < cargoCount; i++) {
+                cargoInputs.innerHTML += `
+                            <div class="form-group">
+                                <label>Cargo ${i + 1} Name</label>
+                                <input name="Cargos[${i}].CargoName" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo ${i + 1} Weight</label>
+                                <input name="Cargos[${i}].CargoWeight" class="form-control" type="number" min="0" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo ${i + 1} Value</label>
+                                <input name="Cargos[${i}].CargoValue" class="form-control" type="number" min="0" required />
+                            </div>
+                        `;
+            }
+        });
+
+        document.getElementById('NumberOfAddresses').addEventListener('change', function () {
+            var addressCount = parseInt(this.value);
+            var addressInputs = document.getElementById('addressInputs');
+            addressInputs.innerHTML = '';
+            for (var i = 0; i < addressCount; i++) {
+                addressInputs.innerHTML += `
+                            <div class="form-group">
+                                <label>Address ${i + 1} Number</label>
+                                <input name="Addresses[${i}].AddressNumber" class="form-control" type="number" min="1" required />
+                            </div>
+                        `;
+            }
+
+            for (var i = 0; i < addressCount; i++) {
+                for (var j = i + 1; j < addressCount; j++) {
+                    addressInputs.innerHTML += `
+                                <div class="form-group">
+                                    <label>Distance from Address ${i + 1} to Address ${j + 1}</label>
+                                    <input name="Addresses[${i}].Distances[${j - i - 1}].ToAddress" type="hidden" value="${j + 1}" />
+                                    <input name="Addresses[${i}].Distances[${j - i - 1}].Distance" class="form-control" type="number" min="0" required />
+                                </div>
+                            `;
+                }
+            }
+        });
+
+        document.getElementById('NumberOfTrucks').addEventListener('change', function () {
+            var truckCount = parseInt(this.value);
+            var truckInputs = document.getElementById('truckInputs');
+            truckInputs.innerHTML = '';
+            for (var i = 0; i < truckCount; i++) {
+                truckInputs.innerHTML += `
+                            <div class="form-group">
+                                <label>Truck ${i + 1} Name</label>
+                                <input name="Trucks[${i}].TruckName" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Truck ${i + 1} Capacity</label>
+                                <input name="Trucks[${i}].TruckCapacity" class="form-control" type="number" min="0" required />
+                            </div>
+                        `;
+            }
+        });
+    </script>
+}
